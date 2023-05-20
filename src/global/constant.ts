@@ -1,0 +1,5 @@
+export const TOKEN_LOGIN = 'token'
+export const NAME_LOGIN='name'
+export const PASSWORD_LOGIN='password'
+export const USER_INFO='userInfo'
+export const MENU_INFO='menuInfo'
