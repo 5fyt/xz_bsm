@@ -66,7 +66,8 @@ function validateForm(isKeep: boolean) {
           localCache.removeItem(NAME_LOGIN)
           localCache.removeItem(PASSWORD_LOGIN)
         }
-        router.push('/home')
+
+        router.push('/main')
         //提示登入信息
         ElMessage.success({
           message: '登入成功',

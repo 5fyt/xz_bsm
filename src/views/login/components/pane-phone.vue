@@ -81,7 +81,7 @@ function validateCode() {
         message: '注册成功',
         duration: 6000
       }).then(() => {
-        router.push('/home')
+        router.push('/main')
       })
     } else {
       ElMessage.error('请重新注册')

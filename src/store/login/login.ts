@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { getUserInfo, getUserMenu, login } from '@/service/login/login'
 import { localCache } from '@/utils/cache'
 import { TOKEN_LOGIN, USER_INFO, MENU_INFO } from '@/global/constant'
+import { getDynamicRoutes } from '@/utils/filter'
+import router from '@/router'
 interface StateType {
   token: string
   userInfo: any
@@ -10,8 +12,8 @@ interface StateType {
 const useLoginStore = defineStore('login', {
   state: (): StateType => ({
     token: localCache.getItem(TOKEN_LOGIN) ?? '',
-    userInfo: {},
-    menuInfo: {}
+    userInfo: localCache.getItem(USER_INFO) ?? {},
+    menuInfo: localCache.getItem(MENU_INFO) ?? {}
   }),
   actions: {
     async asyncLoginAction(account: any) {
@@ -28,6 +30,22 @@ const useLoginStore = defineStore('login', {
       const menu = await getUserMenu(this.userInfo.role.id)
       this.menuInfo = menu.data
       localCache.setItem(MENU_INFO, this.menuInfo)
+      //注册动态路由
+      const dynamicRoutes = getDynamicRoutes(this.menuInfo)
+      dynamicRoutes.forEach((route) => router.addRoute('main', route))
+    },
+    //刷新时，三个数据都要保持不变，必须从本地获取到数据，用pinia的数据校验也会被刷新
+    asyncLoadRouter() {
+      const token = localCache.getItem(TOKEN_LOGIN)
+      const menuInfo = localCache.getItem(MENU_INFO)
+      const userInfo = localCache.getItem(USER_INFO)
+      if (token && menuInfo && userInfo) {
+        this.token = token
+        this.menuInfo = menuInfo
+        this.userInfo = userInfo
+        const dynamicRoutes = getDynamicRoutes(this.menuInfo)
+        dynamicRoutes.forEach((route) => router.addRoute('main', route))
+      }
     }
   }
 })
