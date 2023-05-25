@@ -3,6 +3,7 @@ import { getUserInfo, getUserMenu, login } from '@/service/login/login'
 import { localCache } from '@/utils/cache'
 import { TOKEN_LOGIN, USER_INFO, MENU_INFO } from '@/global/constant'
 import { getDynamicRoutes } from '@/utils/filter'
+
 import router from '@/router'
 interface StateType {
   token: string
@@ -32,6 +33,7 @@ const useLoginStore = defineStore('login', {
       localCache.setItem(MENU_INFO, this.menuInfo)
       //注册动态路由
       const dynamicRoutes = getDynamicRoutes(this.menuInfo)
+
       dynamicRoutes.forEach((route) => router.addRoute('main', route))
     },
     //刷新时，三个数据都要保持不变，必须从本地获取到数据，用pinia的数据校验也会被刷新
@@ -44,6 +46,7 @@ const useLoginStore = defineStore('login', {
         this.menuInfo = menuInfo
         this.userInfo = userInfo
         const dynamicRoutes = getDynamicRoutes(this.menuInfo)
+
         dynamicRoutes.forEach((route) => router.addRoute('main', route))
       }
     }

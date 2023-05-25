@@ -10,6 +10,7 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-app.use(router)
+//封装的刷新后路由不会跳转到404而是保持到原来的路由，顺序不能改，先是动态注册路由在是挂载路由
 app.use(registerStore)
+app.use(router)
 app.mount('#app')

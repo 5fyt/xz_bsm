@@ -1,7 +1,9 @@
 import router from '@/router'
-import { TOKEN_LOGIN } from '@/global/constant'
+import {  TOKEN_LOGIN } from '@/global/constant'
 import { localCache } from './utils/cache'
 import { firstMenu } from './utils/filter'
+// import { getDynamicRoutes } from '@/utils/filter'
+// import notfound from '@/router/NotFound/notfound'
 router.beforeEach((to) => {
   // to and from are both route objects. must call `next`.
   const token = localCache.getItem(TOKEN_LOGIN)
@@ -17,3 +19,35 @@ router.beforeEach((to) => {
    }
 
 })
+// const whitePath = ['/login']
+// router.beforeEach((to, from, next) => {
+//   const token = localCache.getItem(TOKEN_LOGIN)
+//   if (token) {
+//     if (to.path === '/login') {
+//       next(`${firstMenu?.url}`)
+//     } else {
+//       const menuInfo = localCache.getItem(MENU_INFO)
+//       const dynamicRoutes = getDynamicRoutes(menuInfo)
+//       router.addRoute(notfound)
+//       dynamicRoutes.forEach((route) => router.addRoute('main', route))
+//       if (to.path === '/main') {
+
+//         // next({
+//         //   ...to,
+//         //   replace: true,
+//         // });
+//       }
+//     // next()
+//      next({
+//           ...to,
+//           replace: true,
+//         });
+//     }
+//   } else {
+//     if (whitePath.includes(to.path)) {
+//       next('/login')
+//     } else {
+//       next()
+//     }
+//   }
+// })

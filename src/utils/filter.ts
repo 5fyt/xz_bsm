@@ -8,12 +8,6 @@ export const getDynamicRouterList = () => {
   //获取对象中的某个属性添加到新数组里去
   const routes = Object.values(files)
   routes.forEach((route) => dynamicRoutesList.push(route.default))
-  console.log(dynamicRoutesList)
-  // for(const key in files){
-  //   const routes=files[key]
-  //   dynamicRoutes.push(routes.default)
-  // }
-  console.log(dynamicRoutesList)
   return dynamicRoutesList
 }
 //根据路径来显示菜单
@@ -30,14 +24,21 @@ export let firstMenu: any = null
 //根据菜单路由进行匹配动态路由
 export const getDynamicRoutes = (userMenu: any[]) => {
   const routeList = getDynamicRouterList()
-  const dynamicRoutes: RouteRecord[] = []
+  const dynamicRoutes: any[] = []
   for (const item of userMenu) {
     for (const childItem of item.children) {
       const route = routeList.find(
         (routeItem) => routeItem.path === childItem.url
       )
       //缩小范围确定有值的情况下在添加
-      if (route) dynamicRoutes.push(route)
+      if (route) {
+        // 当当前路由不是一级路由时，将一级路由跳转到重定向的二级路由中去，也动态添加到路由中去
+        if (!dynamicRoutes.find((itemMenu) => itemMenu.path === item.url)) {
+          dynamicRoutes.push({ path: item.url, redirect: route.path })
+        }
+        dynamicRoutes.push(route)
+      }
+
       if (!firstMenu && route) {
         firstMenu = childItem
       }
@@ -56,8 +57,8 @@ export const mapCrumbsMenu = (path: string, userMenu: any[]) => {
     for (const childrenMenu of menu.children) {
       if (childrenMenu.url === path) {
         //记录菜单的子路由的name和path
+        crumbsArray.push({ name: menu.name, path: menu.url })
         crumbsArray.push({ name: childrenMenu.name, path: childrenMenu.url })
-        crumbsArray.push({ name: menu.name, path: menu.path })
       }
     }
   }

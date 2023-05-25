@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-const constantRoute= [
+const constantRoute = [
   {
     path: '/',
     redirect: '/main'
@@ -10,11 +10,12 @@ const constantRoute= [
   },
   {
     path: '/main',
-    name:'main', //标记main路由，以便添加动态路由时添加的是他的子路由
+    name: 'main', //标记main路由，以便添加动态路由时添加的是他的子路由
     component: () => import('../views/main/home.vue')
   },
   {
     path: '/:pathMatch(.*)',
+    name: 'NotFound',
     component: () => import('../views/NotFound/NotFound.vue')
   }
 ]
