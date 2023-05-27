@@ -48,6 +48,7 @@ function changeIcon(value) {
   transition: width 0.3s ease;
 }
 .layout-container-demo .el-main {
-  padding: 0;
+  padding: 18px 14px;
+  background-color: #f1f3f4;
 }
 </style>

@@ -47,7 +47,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
-import { TOKEN_LOGIN } from '../global/constant.ts'
+import { TOKEN_LOGIN } from '../../global/constant.ts'
 import { localCache } from '@/utils/cache'
 
 const router = useRouter()

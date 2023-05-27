@@ -3,7 +3,7 @@ export const getDynamicRouterList = () => {
   const dynamicRoutesList: RouteRecord[] = []
   // Record 类型是glob提示的类型
   const files: Record<string, any> = import.meta.glob('../router/**/*.ts', {
-    eager: true
+    eager: true //获取全部路由而不是懒加载的形式
   })
   //获取对象中的某个属性添加到新数组里去
   const routes = Object.values(files)
@@ -56,7 +56,7 @@ export const mapCrumbsMenu = (path: string, userMenu: any[]) => {
   for (const menu of userMenu) {
     for (const childrenMenu of menu.children) {
       if (childrenMenu.url === path) {
-        //记录菜单的子路由的name和path
+        //记录菜单的一级路由和二级路由的name和path
         crumbsArray.push({ name: menu.name, path: menu.url })
         crumbsArray.push({ name: childrenMenu.name, path: childrenMenu.url })
       }

@@ -27,7 +27,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import UserInfo from '@/components/user-info.vue'
+import UserInfo from '@/components/main/user-info.vue'
 import { ArrowRight, Fold, Expand } from '@element-plus/icons-vue'
 // import { ref } from 'vue'
 import { useLoginStore } from '@/store/login/login'
