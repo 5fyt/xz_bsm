@@ -18,7 +18,6 @@ const hyRequest2 = new HYRequest({
       // console.log('局部请求成功拦截')
       const token = localCache.getItem(TOKEN_LOGIN)
       if (token) {
-        console.log(token)
         config.headers['Authorization'] = `Bearer ${token}`
       }
 

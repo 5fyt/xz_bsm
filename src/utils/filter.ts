@@ -44,7 +44,6 @@ export const getDynamicRoutes = (userMenu: any[]) => {
       }
     }
   }
-  console.log(dynamicRoutes)
   return dynamicRoutes
 }
 interface crumbsType {

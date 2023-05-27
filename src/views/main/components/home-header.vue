@@ -38,12 +38,9 @@ const menuStore = useLoginStore()
 const menuInfo = menuStore.menuInfo
 //动态生成面包屑
 const route = useRoute()
-console.log('ss', menuInfo)
-console.log(route.path)
 const breadCrumbs = computed(() => {
   return mapCrumbsMenu(route.path, menuInfo)
 })
-console.log('s', breadCrumbs)
 const isFold = ref(false)
 const emit = defineEmits(['changeIcon'])
 
