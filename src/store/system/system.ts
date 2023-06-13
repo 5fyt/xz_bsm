@@ -7,7 +7,7 @@ interface userType {
 const useUserStore = defineStore('user', {
   state: (): userType => ({
     userList: [],
-    totalCount: 0
+    totalCount: 0,
   }),
   actions: {
     //获取用户列表数据

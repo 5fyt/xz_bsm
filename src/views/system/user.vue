@@ -16,9 +16,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import UserSearch from '@/components/system/user-search.vue'
-import UserMain from '@/components/system/user-main.vue'
-import UserDialog from '@/components/system/user-dialog.vue'
+import UserSearch from '@/components/system/user/user-search.vue'
+import UserMain from '@/components/system/user/user-main.vue'
+import UserDialog from '@/components/system/user/user-dialog.vue'
 import { ref } from 'vue'
 import type { IntanceType } from 'vue'
 
