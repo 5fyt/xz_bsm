@@ -9,7 +9,7 @@
         />
       </div>
 
-      <h2 class="title">稀正管理系统</h2>
+      <h2 class="title">南昌航空科技学院管理系统</h2>
     </div>
     <div class="menu">
       <el-menu
@@ -71,6 +71,7 @@ defineProps({
   .title {
     color: #fff;
     margin-left: 6px;
+    font-size: 14px;
   }
 }
 .logo {

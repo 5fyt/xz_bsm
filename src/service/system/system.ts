@@ -12,3 +12,17 @@ export const deleteDate=(id:number)=>{
     url:`users/${id}`
   })
 }
+//创建新的用户
+export const addNewUser=(formData:any)=>{
+  return hyRequest2.post({
+    url:'/users',
+    data:formData
+  })
+}
+//修改用户的数据
+export const updateUser=(id:number,userForm:any)=>{
+  return hyRequest2.patch({
+    url:`users/${id}`,
+    data:userForm
+  })
+}

@@ -1,7 +1,9 @@
 <template>
   <div class="table-title">
     <h2 class="title">用户列表</h2>
-    <el-button type="success" size="large">新建用户</el-button>
+    <el-button type="success" size="large" @click="addUserFn"
+      >新建用户</el-button
+    >
   </div>
   <div class="table-main">
     <el-table :data="userList" border style="width: 100%">
@@ -39,7 +41,9 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template #default="scope">
-          <el-button type="primary" icon="Edit" text>编辑</el-button>
+          <el-button type="primary" icon="Edit" @click="editBtn(scope.row)" text
+            >编辑</el-button
+          >
           <el-button
             type="danger"
             icon="Delete"
@@ -64,14 +68,16 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, defineExpose } from 'vue'
+import { ref, defineExpose, defineEmits } from 'vue'
 import useUserStore from '@/store/system/system'
 import { storeToRefs } from 'pinia'
 import { formatDate } from '@/utils/format'
 import { ElMessage } from 'element-plus'
+const emit = defineEmits(['showDialog', 'editDialog'])
 const userStore = useUserStore()
 const currentPage = ref(1)
 const pageSize = ref(10)
+
 //初始化表格数据
 changeCurrentPage()
 const { userList, totalCount } = storeToRefs(userStore)
@@ -98,6 +104,14 @@ const deleteFn = (id: number) => {
   })
   //删除后重新渲染
   changeCurrentPage()
+}
+//新建用户
+const addUserFn = () => {
+  emit('showDialog')
+}
+//编辑用户
+const editBtn = (itemForm) => {
+  emit('editDialog', itemForm)
 }
 defineExpose({ changeCurrentPage })
 </script>

@@ -3,8 +3,8 @@ import { getUserInfo, getUserMenu, login } from '@/service/login/login'
 import { localCache } from '@/utils/cache'
 import { TOKEN_LOGIN, USER_INFO, MENU_INFO } from '@/global/constant'
 import { getDynamicRoutes } from '@/utils/filter'
-
 import router from '@/router'
+import useMainStore from '../main/main'
 interface StateType {
   token: string
   userInfo: any
@@ -31,11 +31,16 @@ const useLoginStore = defineStore('login', {
       const menu = await getUserMenu(this.userInfo.role.id)
       this.menuInfo = menu.data
       localCache.setItem(MENU_INFO, this.menuInfo)
+      //登入时就开始请求角色列表和部门列表
+      const mainStore=useMainStore()
+      mainStore.getRoleIdList()
+      mainStore.getDepartmentIdList()
+
       //注册动态路由
       const dynamicRoutes = getDynamicRoutes(this.menuInfo)
-
       dynamicRoutes.forEach((route) => router.addRoute('main', route))
     },
+
     //刷新时，三个数据都要保持不变，必须从本地获取到数据，用pinia的数据校验也会被刷新
     asyncLoadRouter() {
       const token = localCache.getItem(TOKEN_LOGIN)
