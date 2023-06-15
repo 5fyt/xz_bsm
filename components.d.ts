@@ -9,6 +9,10 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CpDialog: typeof import('./src/components/cp-dialog.vue')['default']
+    CpMain: typeof import('./src/components/cp-main.vue')['default']
+    CpSearch: typeof import('./src/components/cp-search.vue')['default']
+    DpDialog: typeof import('./src/components/system/department/dp-dialog.vue')['default']
     DpMain: typeof import('./src/components/system/department/dp-main.vue')['default']
     DpSearch: typeof import('./src/components/system/department/dp-search.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
@@ -45,9 +49,9 @@ declare module '@vue/runtime-core' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    UserDialog: typeof import('./src/components/system/department/user-dialog.vue')['default']
+    UserDialog: typeof import('./src/components/system/user/user-dialog.vue')['default']
     UserInfo: typeof import('./src/components/main/user-info.vue')['default']
-    UserMain: typeof import('./src/components/system/department/user-main.vue')['default']
-    UserSearch: typeof import('./src/components/system/department/user-search.vue')['default']
+    UserMain: typeof import('./src/components/system/user/user-main.vue')['default']
+    UserSearch: typeof import('./src/components/system/user/user-search.vue')['default']
   }
 }
