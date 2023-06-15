@@ -64,12 +64,7 @@ const modalConfig = computed(() => {
 
 //封装了hooks将公用函数利用hooks实现了共享
 const { mainRef, refreshBtn, queryBtn } = useMain()
-const { dialogRef, showDialog, editDialog } = useDialog()
-
-//点击新建添加用户到表格中
-const addUser = () => {
-  dialogRef.value?.confirmDialog()
-}
+const { dialogRef, showDialog, editDialog, addUser } = useDialog()
 </script>
 <style lang="less" scoped>
 .dep-search {

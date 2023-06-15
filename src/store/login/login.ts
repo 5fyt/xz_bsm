@@ -31,10 +31,11 @@ const useLoginStore = defineStore('login', {
       const menu = await getUserMenu(this.userInfo.role.id)
       this.menuInfo = menu.data
       localCache.setItem(MENU_INFO, this.menuInfo)
-      //登入时就开始请求角色列表和部门列表
+      //登入时就开始请求角色列表和部门列表,和完整的菜单列表
       const mainStore=useMainStore()
       mainStore.getRoleIdList()
       mainStore.getDepartmentIdList()
+      mainStore.getMenuList()
 
       //注册动态路由
       const dynamicRoutes = getDynamicRoutes(this.menuInfo)

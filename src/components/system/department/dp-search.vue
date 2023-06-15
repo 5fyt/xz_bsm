@@ -8,7 +8,7 @@
     >
       <el-row :gutter="20">
         <template
-          v-for="(item, index) in prop.searchConfig.formItem"
+          v-for="(item, index) in prop.searchConfig.searchList"
           :key="index"
         >
           <el-col :span="8">
@@ -64,13 +64,13 @@ const emit = defineEmits(['refreshBtn', 'queryBtn'])
 interface IProps {
   searchConfig: {
     labelWidth: string
-    formItem: any[]
+    searchList: any[]
   }
 }
 const prop = defineProps<IProps>()
 //定义一个空对象用来将表单的配置初始值，如果某个配置项配置了初始值那这个值应该赋值给这个空对象的对应那个属性
 const initialForm: any = {}
-for (const item of prop.searchConfig.formItem) {
+for (const item of prop.searchConfig.searchList) {
   initialForm[item.prop] = item.initialValue ?? ''
 }
 

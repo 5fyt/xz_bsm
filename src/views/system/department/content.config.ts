@@ -6,7 +6,7 @@ const contentConfig = {
     handleBtn: '新增部门'
   },
   //配置表格信息
-  departmentList: [
+  propsList: [
     {
       type: 'selection',
       width: '70',

@@ -90,15 +90,23 @@ const cancelDialog = () => {
 //添加用户到表格中
 const confirmDialog = () => {
   //添加数据并重新渲染表格
+  /*
+    将角色弹出层里的所选角色对应的id传给添加新角色的data数据里
+  */
+  let allData = dialogForm
+  if (prop.otherInfo) {
+    allData = { ...dialogForm, ...prop.otherInfo }
+  }
+
   if (titleShow.value) {
-    depStore.addNewUsers(prop.dialogConfig.pageName, dialogForm)
+    depStore.addNewUsers(prop.dialogConfig.pageName, allData)
     dialogVisible.value = false
   } else {
     //更新数据并渲染表格
     depStore.updateUserDate(
       prop.dialogConfig.pageName,
       editData.value.id,
-      dialogForm
+      allData
     )
     dialogVisible.value = false
   }
@@ -118,7 +126,8 @@ const openDialog = (value: boolean, itemForm?: any) => {
         (item) => item.prop === key
       )
       console.log(item)
-      dialogForm[key] = item.initialValue ? item.initialValue : ''
+      //不适合用item.initialValue进行判断因为有些没有配置prop
+      dialogForm[key] = item ? item.initialValue : ''
     }
     editData.value = null
   } else {

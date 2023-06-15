@@ -6,11 +6,16 @@
     }}</el-button>
   </div>
   <div class="table-main">
-    <el-table :data="userList" border style="width: 100%">
-      <template
-        v-for="(item, index) in contentConfig.departmentList"
-        :key="index"
-      >
+    <el-table
+      :data="userList"
+      border
+      style="width: 100%"
+      v-bind="contentConfig.childrenTree"
+    >
+      <!-- v-bind="contentConfig.childrenTree"  是配置好的树形菜单 必需要有 rowKey: 'id'
+      配置项里不能有type属性要不会被覆盖掉
+       -->
+      <template v-for="(item, index) in contentConfig.propsList" :key="index">
         <!-- 操作 -->
         <template v-if="item.type === 'handler'">
           <el-table-column :label="item.label" align="center">
@@ -70,7 +75,10 @@
       </template>
     </el-table>
   </div>
-  <div class="table-pagination">
+  <div
+    class="table-pagination"
+    v-if="contentConfig.show === false ? false : true"
+  >
     <el-pagination
       v-model:current-page="currentPage"
       v-model:page-size="pageSize"
@@ -91,10 +99,12 @@ import { ElMessage } from 'element-plus'
 const emit = defineEmits(['showDialog', 'editDialog'])
 interface IProps {
   contentConfig: {
+    pageName: string
     header?: {
       title: string
       handleBtn: string
     }
+    propsList: any
   }
 }
 const prop = defineProps<IProps>()
@@ -117,11 +127,11 @@ function changeCurrentPage(formDate: any = {}) {
   const offset = (currentPage.value - 1) * pageSize.value
   const size = pageSize.value
   const query = { offset, size }
-  depStore.asyncGetList('department', { ...query, ...formDate })
+  depStore.asyncGetList(prop.contentConfig.pageName, { ...query, ...formDate })
 }
 //删除表格数据
 const deleteFn = (id: number) => {
-  depStore.deleteUserDate('department', id)
+  depStore.deleteUserDate(prop.contentConfig.pageName, id)
   ElMessage({
     message: '删除成功',
     type: 'success'

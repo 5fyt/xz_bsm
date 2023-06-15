@@ -11,3 +11,9 @@ export const getDepartmentsList=()=>{
     url:'department/list'
   })
 }
+//获取菜单列表
+export function getEntireMenus() {
+  return hyRequest2.post({
+    url: '/menu/list'
+  })
+}

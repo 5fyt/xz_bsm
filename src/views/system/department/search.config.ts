@@ -1,5 +1,5 @@
 const searchConfig = {
-  formItem: [
+  searchList: [
     {
       type: 'input',
       label: '部门名称',
