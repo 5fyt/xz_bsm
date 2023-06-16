@@ -1,3 +1,0 @@
-<template>
-  <div>商品统计</div>
-</template>

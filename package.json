@@ -13,10 +13,14 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "countup.js": "^2.6.2",
+    "echarts": "^5.4.2",
     "element-plus": "^2.3.4",
+    "highlight.js": "^11.8.0",
     "pinia": "^2.0.35",
     "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "wangeditor": "^4.7.15"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

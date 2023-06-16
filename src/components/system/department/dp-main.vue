@@ -48,7 +48,7 @@
           </el-table-column>
         </template>
         <!-- 自定义模块：可以在表格中插入任何想要插入的东西 -->
-        <!-- <template v-else-if="item.type === 'custom'">
+        <template v-else-if="item.type === 'custom'">
           <el-table-column
             :width="item.width"
             :prop="item.prop"
@@ -63,7 +63,7 @@
               ></slot>
             </template>
           </el-table-column>
-        </template> -->
+        </template>
         <!-- 部门名和领导名 -->
         <template v-else>
           <el-table-column
