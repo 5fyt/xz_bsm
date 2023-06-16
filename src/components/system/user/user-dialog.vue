@@ -60,6 +60,7 @@
 </template>
 <script setup lang="ts">
 import { ref, defineExpose, reactive } from 'vue'
+import { ElMessage } from 'element-plus'
 import useMainStore from '@/store/main/main'
 import useUserStore from '@/store/system/system'
 const dialogVisible = ref(false)
@@ -85,10 +86,12 @@ const confirmDialog = () => {
   //添加数据并重新渲染表格
   if (titleShow.value) {
     userStore.addNewUsers(dialogForm)
+    ElMessage.success({ message: '添加成功', type: 'success' })
     dialogVisible.value = false
   } else {
     //更新数据并渲染表格
     userStore.updateUserDate(editData.value.id, dialogForm)
+    ElMessage.success({ message: '修改成功', type: 'success' })
     dialogVisible.value = false
   }
 }

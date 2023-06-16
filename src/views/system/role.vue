@@ -61,18 +61,26 @@ const { mainRef, refreshBtn, queryBtn } = useMain()
 const otherInfo = ref({})
 const treeRef = ref()
 const handleCheck = (data1, data2) => {
-  const menuId = [...data2.checkedKeys, ...data2.halfCheckedKeys]
-  otherInfo.value = { menuId }
+  const menuList = [...data2.checkedKeys, ...data2.halfCheckedKeys]
+  otherInfo.value = { menuList }
 }
 const editBack = (itemForm) => {
   nextTick(() => {
     const menuItem = mapMenu(itemForm.menuList)
-    console.log(menuItem)
+    console.log('menu', menuItem)
     treeRef.value?.setCheckedKeys(menuItem)
   })
-  console.log({ ...itemForm })
 }
-const { dialogRef, showDialog, editDialog, addUser } = useDialog(editBack)
+//清空角色列表中的角色
+const clearRoleBack = () => {
+  nextTick(() => {
+    treeRef.value?.setCheckedKeys([])
+  })
+}
+const { dialogRef, showDialog, editDialog, addUser } = useDialog(
+  editBack,
+  clearRoleBack
+)
 </script>
 <style lang="less" scoped>
 .search {

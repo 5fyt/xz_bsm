@@ -56,6 +56,7 @@
 </template>
 <script setup lang="ts">
 import { ref, defineExpose, reactive, defineProps } from 'vue'
+import { ElMessage } from 'element-plus'
 // import useMainStore from '@/store/main/main'
 import useDepStore from '@/store/system/department'
 interface IProp {
@@ -67,6 +68,7 @@ interface IProp {
     }
     dialogList: any[]
   }
+  otherInfo?: any
 }
 const prop = defineProps<IProp>()
 const dialogVisible = ref(false)
@@ -96,10 +98,12 @@ const confirmDialog = () => {
   let allData = dialogForm
   if (prop.otherInfo) {
     allData = { ...dialogForm, ...prop.otherInfo }
+    console.log(1)
   }
-
+  console.log('allData', allData)
   if (titleShow.value) {
     depStore.addNewUsers(prop.dialogConfig.pageName, allData)
+    ElMessage.success({ message: '添加成功', type: 'success' })
     dialogVisible.value = false
   } else {
     //更新数据并渲染表格
@@ -108,6 +112,7 @@ const confirmDialog = () => {
       editData.value.id,
       allData
     )
+    ElMessage.success({ message: '修改成功', type: 'success' })
     dialogVisible.value = false
   }
 }

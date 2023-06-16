@@ -22,7 +22,7 @@
             :size="30"
             src="https://p.qqan.com/up/2023-4/16826439515547346.jpg"
           />
-          <span class="name">冯韩振</span>
+          <span class="name">{{ userInfo.name }}</span>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -49,8 +49,10 @@
 import { useRouter } from 'vue-router'
 import { TOKEN_LOGIN } from '../../global/constant.ts'
 import { localCache } from '@/utils/cache'
-
+import { useLoginStore } from '@/store/login/login'
 const router = useRouter()
+const loginStore = useLoginStore()
+const userInfo = loginStore.userInfo
 function handleExitClick() {
   localCache.removeItem(TOKEN_LOGIN)
   router.push('/login')

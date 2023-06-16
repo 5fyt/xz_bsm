@@ -1,5 +1,5 @@
 <template>
-  <div class="search">
+  <div class="search" v-if="Isquery">
     <el-form
       label-width="80px"
       :model="searchForm"
@@ -61,6 +61,7 @@
 </template>
 <script setup lang="ts">
 import { reactive, ref, defineEmits } from 'vue'
+import { usePermission } from '@/hooks/usePermission'
 import type { FormInstance } from 'element-plus'
 const searchRef = ref<FormInstance>()
 const emit = defineEmits(['refreshBtn', 'queryBtn'])
@@ -71,6 +72,7 @@ const searchForm = reactive({
   enable: 1,
   createAt: ''
 })
+const Isquery = usePermission(`system:users:query`)
 //点击重置按钮重置表单
 const RefreshBtn = () => {
   searchRef.value?.resetFields()

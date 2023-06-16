@@ -1,7 +1,7 @@
 <template>
   <div class="table-title">
     <h2 class="title">用户列表</h2>
-    <el-button type="success" size="large" @click="addUserFn"
+    <el-button type="success" size="large" @click="addUserFn" v-if="IsCreate"
       >新建用户</el-button
     >
   </div>
@@ -41,12 +41,18 @@
       </el-table-column>
       <el-table-column label="操作" align="center">
         <template #default="scope">
-          <el-button type="primary" icon="Edit" @click="editBtn(scope.row)" text
+          <el-button
+            type="primary"
+            icon="Edit"
+            v-if="IsEdit"
+            @click="editBtn(scope.row)"
+            text
             >编辑</el-button
           >
           <el-button
             type="danger"
             icon="Delete"
+            v-if="IsDelete"
             text
             @click="deleteFn(scope.row.id)"
             >删除</el-button
@@ -70,6 +76,7 @@
 <script setup lang="ts">
 import { ref, defineExpose, defineEmits } from 'vue'
 import useUserStore from '@/store/system/system'
+import { usePermission } from '@/hooks/usePermission'
 import { storeToRefs } from 'pinia'
 import { formatDate } from '@/utils/format'
 import { ElMessage } from 'element-plus'
@@ -87,6 +94,17 @@ const handleSizeChange = () => {
 const handleCurrentChange = () => {
   changeCurrentPage()
 }
+userStore.$onAction(({ name, after }) => {
+  after(() => {
+    if (
+      name === 'deleteUserDate' ||
+      name === 'addNewUsers' ||
+      name === 'updateUserDate'
+    ) {
+      currentPage.value = 1
+    }
+  })
+})
 //换页时重新请求数据渲染表格
 function changeCurrentPage(formDate: any = {}) {
   //计算偏移量
@@ -105,6 +123,9 @@ const deleteFn = (id: number) => {
   //删除后重新渲染
   changeCurrentPage()
 }
+const IsCreate = usePermission(`system:users:create`)
+const IsDelete = usePermission(`system:users:delete`)
+const IsEdit = usePermission(`system:users:update`)
 //新建用户
 const addUserFn = () => {
   emit('showDialog')

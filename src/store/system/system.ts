@@ -1,4 +1,5 @@
 import { deleteDate, getUserList , addNewUser,updateUser} from '@/service/system/system'
+import useMainStore from '@/store/main/main'
 import { defineStore } from 'pinia'
 interface userType {
   userList: any[]
@@ -26,11 +27,21 @@ const useUserStore = defineStore('user', {
     async addNewUsers(formDate:any) {
       await addNewUser(formDate)
       this.asyncGetList({offset:0,size:10})
+       //获取到完整的角色列表
+       const mainStore = useMainStore()
+       mainStore.getMenuList()
+       mainStore.getRoleIdList()
+       mainStore.getDepartmentIdList()
     },
     //修改用户数据
     async updateUserDate(id:number,userForm:any){
       await updateUser(id,userForm)
       this.asyncGetList({offset:0,size:10})
+       //获取到完整的角色列表
+       const mainStore = useMainStore()
+       mainStore.getMenuList()
+       mainStore.getRoleIdList()
+       mainStore.getDepartmentIdList()
     }
   }
 })

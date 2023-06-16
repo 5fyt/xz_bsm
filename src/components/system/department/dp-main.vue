@@ -1,7 +1,7 @@
 <template>
   <div class="table-title">
     <h2 class="title">{{ contentConfig?.header?.title ?? '数据列表' }}</h2>
-    <el-button type="success" size="large" @click="addUserFn">{{
+    <el-button type="success" size="large" @click="addUserFn" v-if="IsCreate">{{
       contentConfig?.header?.handlerBtn ?? '新增数据'
     }}</el-button>
   </div>
@@ -21,6 +21,7 @@
           <el-table-column :label="item.label" align="center">
             <template #default="scope">
               <el-button
+                v-if="IsEdit"
                 type="primary"
                 icon="Edit"
                 @click="editBtn(scope.row)"
@@ -30,6 +31,7 @@
               <el-button
                 type="danger"
                 icon="Delete"
+                v-if="IsDelete"
                 text
                 @click="deleteFn(scope.row.id)"
                 >删除</el-button
@@ -95,6 +97,7 @@ import { ref, defineExpose, defineEmits, defineProps } from 'vue'
 import useDepStore from '@/store/system/department'
 import { storeToRefs } from 'pinia'
 import { formatDate } from '@/utils/format'
+import { usePermission } from '@/hooks/usePermission.ts'
 import { ElMessage } from 'element-plus'
 const emit = defineEmits(['showDialog', 'editDialog'])
 interface IProps {
@@ -112,6 +115,22 @@ const depStore = useDepStore()
 const currentPage = ref(1)
 const pageSize = ref(10)
 
+const IsCreate = usePermission(`system:${prop.contentConfig.pageName}:create`)
+const IsDelete = usePermission(`system:${prop.contentConfig.pageName}:delete`)
+const IsEdit = usePermission(`system:${prop.contentConfig.pageName}:update`)
+
+//当store里面的action被调用后，将currentPage回退到第一页
+depStore.$onAction(({ name, after }) => {
+  after(() => {
+    if (
+      name === 'deleteUserDate' ||
+      name === 'addNewUsers' ||
+      name === 'updateUserDate'
+    ) {
+      currentPage.value = 1
+    }
+  })
+})
 //初始化表格数据
 changeCurrentPage()
 const { userList, totalCount } = storeToRefs(depStore)
